@@ -1,8 +1,8 @@
 import torch
-import torch.functional as F
+import torch.nn.functional as F
 import random
 import numpy as np
-from models import ActorNework, CriticNewtork
+from models import ActorNetwork, CriticNetwork
 from replay_buffer import ReplayBuffer
 from noise import OUNoise
 

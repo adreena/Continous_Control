@@ -1,5 +1,5 @@
 import torch
-import torch.functions as F
+import torch.nn.functional as F
 import numpy as np
 
 
@@ -9,32 +9,32 @@ class ActorNetwork(torch.nn.Module):
         self.state_space = state_space
         self.action_space = action_space
         self.device = device
-        torch.manual_seed(seed)
+        self.seed = torch.manual_seed(seed)
         
-        self.cn1 = torch.nn.Conv2d(self.state_space, 32, kernel_size )
-        self.cn2 = torch.nn.Conv2d(32, 63, kernel_size)
-        self.fc1 = torch.nn.Linear(,512)
+        self.fc1 = torch.nn.Linear(self.state_space, 512 )
         self.fc2 = torch.nn.Linear(512, action_space)
 
-    def init_weights(self):
-        self.cn1.data.weights =
-        
     def forward(self, state):
-        output = F.relu(self.cn1(state))
-        output = F.relu(self.cn2(output))
-        output = output.view(output.size(0),-1)
-        output = F.relu(self.fc1(output))
-        return self.fc2(output)
-    
-    
+        output = F.relu(self.fc1(state))
+        return F.tanh(self.fc2(output))
+
 
 class CriticNetwork(torch.nn.Module):
     def __init__(self, action_space, state_space, device, seed):
         super(CriticNetwork, self).__init__()
+        self.seed = torch.manual_seed(seed)
         self.state_space = state_space
         self.action_space = action_space
         self.device = device
-        torch.manual_seed(seed)
 
-        self.fc1 = torch.nn.Linear()
+        self.fc1 = torch.nn.Linear(state_space, 100)
+        self.fc2 = torch.nn.Linear(100+action_space, 512)
+        self.fc3 = torch.nn.Linear(512, 1)
+        
+    def forward(self, state, action):
+        output = F.leaky_relu(self.fc1(state))
+        output = torch.cat((output, action), dim=1)
+        output = F.leaky_relu(self.fc2(output))
+        return self.fc3(output)
+
         

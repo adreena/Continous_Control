@@ -1,8 +1,11 @@
 from collections import deque, namedtuple
 import numpy as np
+import random
+import torch
 
 class ReplayBuffer():
-    def __init__(self, buffer_size, batch_size):
+    def __init__(self, buffer_size, batch_size, device, seed):
+        self.device = device
         self.buffer_size=buffer_size
         self.batch_size = batch_size
         self.memory = deque(maxlen=self.buffer_size)

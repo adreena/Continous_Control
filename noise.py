@@ -1,5 +1,6 @@
 import random
 import numpy as np
+import copy
 
 class OUNoise:
     """Ornstein-Uhlenbeck process."""

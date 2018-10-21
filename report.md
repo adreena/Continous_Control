@@ -21,7 +21,7 @@ This algorithm is introduced in [Continuous control With Deep Reinforcement Lear
 
 DDPG agent consists of 4 networks actor_network, actor_target_network, critic_network and critic_target_network. It starts by taking actions in epsilon-greedy manner and adding tuple of <state, action, reward, next_action, done> to its replay buffer. At every 100 steps (i.e. update_rate) it does a learning process by updating its local actor & critic network which includes backpropagation steps through each network to calculate gradients and finally applying a soft update to the target networks.
 
-Actor nework has a hidden layer of 128 nodes and outputs actions for each state. Critic network consists of 3 hidden layers with 128, 64 & 32 neurons which outputs a single value.
+Actor nework has a hidden layer of 128 nodes and outputs actions for each state. Critic network consists of 3 hidden layers with 128, 64 & 32 neurons which outputs a single value. both architectures use learning rate of 0.001 and Adam optimizer.
 
 Other hyperparameters are:
   - buffer_size: 100,000 tuples, 

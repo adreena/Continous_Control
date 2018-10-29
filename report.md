@@ -1,6 +1,6 @@
 ## Environment
 
-* Number of agents: 1
+* Number of agents: 20
 * State Space: observation space consists of 33 variables corresponding to position, rotation, velocity, and angular velocities of the arm. 
 * Action Space: Each action is a vector with 4 numbers, corresponding to torque applicable to two joints, 
 values in action vector must be a number between -1 and 1
@@ -19,17 +19,40 @@ This algorithm is fully explained in [Continuous control With Deep Reinforcement
 
 ### Agent
 
-DDPG agent consists of 4 networks actor_network, actor_target_network, critic_network and critic_target_network. It starts by taking actions in epsilon-greedy manner and adding tuple of <state, action, reward, next_action, done> to its replay buffer. At every 100 steps (i.e. update_rate) it does a learning process by updating its local actor & critic network which includes backpropagation steps through each network to calculate gradients and finally applying a soft update to the target networks.
+DDPG agent consists of 4 networks actor_network, actor_target_network, critic_network and critic_target_network. It starts by taking actions in epsilon-greedy manner and adding tuple of <state, action, reward, next_action, done> to its replay buffer. At every 10 steps (i.e. update_rate) it does a learning process by updating its local actor & critic network which includes backpropagation steps through each network to calculate gradients and finally applying a soft update to the target networks.
 
-Actor nework has a hidden layer of 128 nodes and outputs actions for each state. Critic network consists of 3 hidden layers with 128, 64 & 32 neurons which outputs a single value. both architectures use learning rate of 0.001 and Adam optimizer.
+Actor nework has 3 hidden layer of 128 nodes with BatchNormalization layers in between each, it outputs actions for each state. Critic network consists of 3 hidden layers with 128, 128+action_size & 128 neurons which outputs a single value. both architectures use learning rate of 0.001 and Adam optimizer.
 
 Other hyperparameters are:
   - buffer_size: 100,000 tuples, 
-  - batch_size: 512
+  - batch_size: 256
   - learning_rate_actor: 0.001
   - learning_rate_critic: 0.001
   - gamma (discount factor): 0.995
   - tau (soft update interpolation rate): 0.001
   
 Agent is trained over 10,000 episodes and the average of 100 last episodes are plotted below:
+
+
+
+### Other experiments:
+
+I tried multiple cconfigurations of hyperparameters both for single agent and multi-agent environments, none of the configurations could achieve 30, here is my summary of hyperparameters along with score diagrams plotted from tensorboard:
+
+- experiment 1: 
+  
+  
+<table style="width:100%">
+  <tr>
+    <td>- num_agenta : 1 <br>
+  - actor network : 1 hidden layer 128<br>
+  - critic network: 3 hidden layers 128, 64, 32<br>
+  - update_rate: 100<br>
+  - batch_size : 512</td>
+    <td>Image</td>
+  </tr>
+</table>
+  
+
+
 

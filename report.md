@@ -31,13 +31,13 @@ Other hyperparameters are:
   - gamma (discount factor): 0.995
   - tau (soft update interpolation rate): 0.001
   
-Agent is trained over 10,000 episodes and the average of 100 last episodes are plotted below:
+Agent is trained over 10,000 episodes and the average of 100 last episodes are plotted below (taken from my jupyter notebook experiment):
 
 
 
 ### Other experiments:
 
-I tried multiple cconfigurations of hyperparameters both for single agent and multi-agent environments, none of the configurations could achieve 30, here is my summary of hyperparameters along with score diagrams plotted from tensorboard:
+I tried multiple cconfigurations of hyperparameters both for single agent and multi-agent environments, none of the configurations could achieve 30. Reducing update_rate improve my model signficantly and helped agent learn faster, another improvement was acheived with batch_size of 256 which performed much better than 512. Here is my summary of hyperparameters along with score diagrams plotted from tensorboard:
 
 <table style="width:100%">
   <tr>

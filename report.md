@@ -39,13 +39,26 @@ Agent is trained over 10,000 episodes and the average of 100 last episodes are p
 
 I tried multiple cconfigurations of hyperparameters both for single agent and multi-agent environments, none of the configurations could achieve 30, here is my summary of hyperparameters along with score diagrams plotted from tensorboard:
 
-- experiment 1: 
-  
-  
 <table style="width:100%">
   <tr>
-    <td>- num_agenta : 1 <br>
+    <td>- num_agents : 1 <br>
   - actor network : 1 hidden layer 128<br>
+  - critic network: 3 hidden layers 128, 64, 32<br>
+  - update_rate: 100<br>
+  - batch_size : 512</td>
+    <td>Image</td>
+  </tr>
+  <tr>
+    <td>- num_agents : 1 <br>
+  - actor network : 2 hidden layers 128, 128<br>
+  - critic network: 3 hidden layers 128, 64, 32<br>
+  - update_rate: 200<br>
+  - batch_size : 512</td>
+    <td>Image</td>
+  </tr>
+  <tr>
+    <td>- num_agents : 20 <br>
+  - actor network : 2 hidden layers 128, 128<br>
   - critic network: 3 hidden layers 128, 64, 32<br>
   - update_rate: 100<br>
   - batch_size : 512</td>

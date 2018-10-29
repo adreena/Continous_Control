@@ -46,7 +46,7 @@ I tried multiple cconfigurations of hyperparameters both for single agent and mu
   - critic network: 3 hidden layers 128, 64, 32<br>
   - update_rate: 100<br>
   - batch_size : 512</td>
-    <td>Image</td>
+    <td><img src="./images/1.png"  height="160"/></td>
   </tr>
   <tr>
     <td>- num_agents : 1 <br>
@@ -54,7 +54,7 @@ I tried multiple cconfigurations of hyperparameters both for single agent and mu
   - critic network: 3 hidden layers 128, 64, 32<br>
   - update_rate: 200<br>
   - batch_size : 512</td>
-    <td>Image</td>
+    <td><img src="./images/2.png"  height="160"/></td>
   </tr>
   <tr>
     <td>- num_agents : 20 <br>
@@ -62,7 +62,7 @@ I tried multiple cconfigurations of hyperparameters both for single agent and mu
   - critic network: 3 hidden layers 128, 64, 32<br>
   - update_rate: 100<br>
   - batch_size : 512</td>
-    <td>Image</td>
+    <td><img src="./images/3.png"  height="160"/></td>
   </tr>
 </table>
   

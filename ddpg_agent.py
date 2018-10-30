@@ -7,7 +7,7 @@ from replay_buffer import ReplayBuffer
 from noise import OUNoise
 
 class DDPGAgent():
-    def __init__(self, state_space, action_space, buffer_size, batch_size,learning_rate_actor, learning_rate_critic,update_rate, gamma, tau, device, seed, num_agents):
+    def __init__(self, state_space, action_space, buffer_size, batch_size,learning_rate_actor, learning_rate_critic,update_rate, gamma, tau, device, seed, num_agents, epsilon, epsilon_decay, epsilon_min):
         self.num_agents = num_agents
         self.action_space = action_space
         self.state_space = state_space
@@ -31,26 +31,31 @@ class DDPGAgent():
         self.noise = OUNoise(action_space, seed)
         self.memory = ReplayBuffer(buffer_size = self.buffer_size, batch_size=self.batch_size, 
                                    device=device, seed=seed)
-
+        self.epsilon = epsilon
+        self.epsilon_decay = epsilon_decay
+        self.epsilon_min = epsilon_min
+        
     def reset(self):
         self.noise.reset()
         
     def act(self, state, epsilon, add_noise = True):
-        if random.random() > epsilon:
-            state = torch.from_numpy(state).float().to(self.device)
-            self.actor_local_network.eval()
-            with torch.no_grad():
-                action = self.actor_local_network(state).cpu().data.numpy()
-            self.actor_local_network.train()
-            if add_noise:
-                action += self.noise.sample()
-        else:
-            action = np.random.randn(self.num_agents, self.action_space)
+#         if random.random() > epsilon:
+        state = torch.from_numpy(state).float().to(self.device)
+        self.actor_local_network.eval()
+        with torch.no_grad():
+            action = self.actor_local_network(state).cpu().data.numpy()
+        self.actor_local_network.train()
+        if add_noise:
+            action += self.noise.sample()*self.epsilon
+#         else:
+#             action = np.random.randn(self.num_agents, self.action_space)
         return np.clip(action, -1,1)
     
         
-    def step(self, state, action, reward, next_state, done):
-        self.memory.add(state, action, reward, next_state, done)
+    def step(self, states, actions, rewards, next_states, dones):
+        for state, action, reward, next_state, done in zip(states, actions, rewards, next_states, dones):
+            self.memory.add(state, action, reward, next_state, done)
+            #elf.memory.add(state, action, reward, next_state, done)
         self.step_count = (self.step_count+1) % self.update_rate 
         if self.step_count == 0 and len(self.memory)>self.batch_size:
             self.learn(self.gamma)
@@ -76,6 +81,10 @@ class DDPGAgent():
         actor_loss.backward()
         self.actor_optimizer.step()
         self.soft_update(self.actor_target_network , self.actor_local_network)
+        
+        self.epsilon -= self.epsilon_decay
+        self.epsilon = max(self.epsilon_min, self.epsilon)
+        self.noise.reset()
        
         
     def soft_update(self, target, local):

@@ -80,5 +80,9 @@ I tried multiple cconfigurations of hyperparameters both for single agent and mu
 </table>
   
 
+### Future Work:
+
+- Solving Crawler challenge 
+- Trying PPO and A3C algorithms and compare their performances with DDPG
 
 

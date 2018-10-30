@@ -31,13 +31,13 @@ Other hyperparameters are:
   - gamma (discount factor): 0.995
   - tau (soft update interpolation rate): 0.001
   
-Agent is trained over 10,000 episodes and the average of 100 last episodes are plotted below:
+Agent is trained over 10,000 episodes and the average of 100 last episodes are plotted below (taken from my jupyter notebook experiment):
 
 
 
 ### Other experiments:
 
-I tried multiple cconfigurations of hyperparameters both for single agent and multi-agent environments, none of the configurations could achieve 30, here is my summary of hyperparameters along with score diagrams plotted from tensorboard:
+I tried multiple cconfigurations of hyperparameters both for single agent and multi-agent environments, none of the configurations could achieve 30. Reducing update_rate improve my model signficantly and helped agent learn faster, another improvement was acheived with batch_size of 256 which performed much better than 512. Here is my summary of hyperparameters along with score diagrams plotted from tensorboard:
 
 <table style="width:100%">
   <tr>
@@ -46,7 +46,7 @@ I tried multiple cconfigurations of hyperparameters both for single agent and mu
   - critic network: 3 hidden layers 128, 64, 32<br>
   - update_rate: 100<br>
   - batch_size : 512</td>
-    <td>Image</td>
+    <td><img src="./images/1.png"  height="160"/></td>
   </tr>
   <tr>
     <td>- num_agents : 1 <br>
@@ -54,7 +54,7 @@ I tried multiple cconfigurations of hyperparameters both for single agent and mu
   - critic network: 3 hidden layers 128, 64, 32<br>
   - update_rate: 200<br>
   - batch_size : 512</td>
-    <td>Image</td>
+    <td><img src="./images/2.png"  height="160"/></td>
   </tr>
   <tr>
     <td>- num_agents : 20 <br>
@@ -62,7 +62,7 @@ I tried multiple cconfigurations of hyperparameters both for single agent and mu
   - critic network: 3 hidden layers 128, 64, 32<br>
   - update_rate: 100<br>
   - batch_size : 512</td>
-    <td>Image</td>
+    <td><img src="./images/3.png"  height="160"/></td>
   </tr>
 </table>
   
